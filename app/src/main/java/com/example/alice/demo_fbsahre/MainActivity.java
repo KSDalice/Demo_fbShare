@@ -8,6 +8,7 @@ import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -53,9 +54,11 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_VIDEO_CODE = 1000;
-    Button btnShareLink, btnSharePhoto, btnShareVideo, btnLogin;
+    Button btnShareLink, btnSharePhoto, btnShareVideo, btnFbLogin,btnGoogleLogin;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+
+    MyLifeCycleObserver myLifeCycleObserver;
 
     com.squareup.picasso.Target target = new com.squareup.picasso.Target() {
         @Override
@@ -88,11 +91,19 @@ public class MainActivity extends AppCompatActivity {
 //        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         printHashKey();
+        //取得設備碼
+        String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.v("android_ID:",android_id);
+        //新增生命週期觀察
+        myLifeCycleObserver = new MyLifeCycleObserver("MainActivity");
+
+        getLifecycle().addObserver(myLifeCycleObserver);
         //init view
         btnShareLink = (Button) findViewById(R.id.btn_share_link);
         btnShareVideo = (Button) findViewById(R.id.btn_share_Vedio);
         btnSharePhoto = (Button) findViewById(R.id.btn_share_Photo);
-        btnLogin = (Button) findViewById(R.id.btn_login) ;
+        btnFbLogin = (Button) findViewById(R.id.btn_fblogin) ;
+        btnGoogleLogin = (Button) findViewById(R.id.btn_googlelogin);
 
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
@@ -172,10 +183,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnFbLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myLifeCycleObserver.GetNextPage("FbLogin");
                 Intent intent = new Intent(MainActivity.this,FbLogin.class);
+                startActivity(intent);
+            }
+        });
+        btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myLifeCycleObserver.GetNextPage("GoogleLogin");
+                Intent intent = new Intent(MainActivity.this,GoogleLogin.class);
                 startActivity(intent);
             }
         });

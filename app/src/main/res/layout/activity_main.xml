@@ -30,9 +30,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_login"
-            android:text="Log in範例"/>
-
+            android:id="@+id/btn_fblogin"
+            android:text="FB Log in範例"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_googlelogin"
+            android:text="Google Log in範例"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -2,4 +2,6 @@
     <string name="app_name">Demo_fb</string>
     <string name="facebook_app_id"> your facebook_app_id</string>
     <string name="fb_login_protocol_scheme">your fb_login_protocol_scheme</string>
+    <string name="server_client_id">944417588308-sha0f74iutbcc2g3msr2he81a21ee398.apps.googleusercontent.com</string>
+
 </resources>
